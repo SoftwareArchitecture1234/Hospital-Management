@@ -1,3 +1,6 @@
+server:
+  port: 8761
+
 eureka:
   instance:
     hostname: localhost
@@ -6,6 +9,4 @@ eureka:
     fetch-registry: false
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}/${server.port}/eureka/
-
-server:
-  port: 8761
+  renewalPercentThreshold: 0.85
