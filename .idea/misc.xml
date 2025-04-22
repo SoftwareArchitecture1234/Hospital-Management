@@ -4,19 +4,25 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/gateway/pom.xml" />
-        <option value="$PROJECT_DIR$/staffmanagement/pom.xml" />
-        <option value="$PROJECT_DIR$/patient/pom.xml" />
         <option value="$PROJECT_DIR$/HMS_Auth_Service/pom.xml" />
         <option value="$PROJECT_DIR$/HMS_ConfigServer/pom.xml" />
         <option value="$PROJECT_DIR$/HMS_Register_Server/pom.xml" />
         <option value="$PROJECT_DIR$/auth/pom.xml" />
-        <option value="$PROJECT_DIR$/discovery/pom.xml" />
         <option value="$PROJECT_DIR$/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/discovery/pom.xml" />
+        <option value="$PROJECT_DIR$/gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/patient/pom.xml" />
+        <option value="$PROJECT_DIR$/staffmanagement/pom.xml" />
+        <option value="$PROJECT_DIR$/medicalhistory/pom.xml" />
       </list>
     </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/medicalhistory/pom.xml" />
+      </set>
+    </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_22" default="true" project-jdk-name="22" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_24" default="true" project-jdk-name="24" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>
