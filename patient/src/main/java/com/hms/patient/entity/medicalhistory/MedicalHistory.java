@@ -1,5 +1,6 @@
-package com.hms.patient.entity;
+package com.hms.patient.entity.medicalhistory;
 
+import com.hms.patient.entity.TempPatient;
 import lombok.Data;
 
 import jakarta.persistence.*;

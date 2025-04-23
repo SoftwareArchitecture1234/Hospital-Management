@@ -1,7 +1,8 @@
 package com.hms.patient.controller;
 
 import com.hms.patient.common.PageResponse;
-import com.hms.patient.entity.MedicalHistory;
+import com.hms.patient.entity.medicalhistory.MedicalHistory;
+import com.hms.patient.entity.medicalhistory.MedicalHistoryCreateBody;
 import com.hms.patient.exception.ExceptionResourceNotFound;
 import com.hms.patient.service.MedicalHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/medical-history")
@@ -44,22 +44,22 @@ public class MedicalHistoryController {
 
 
     @PostMapping
-    public ResponseEntity<MedicalHistory> createMedicalHistory(@RequestBody MedicalHistory medicalHistory) {
-        return new ResponseEntity<>(medicalHistoryService.saveMedicalHistory(medicalHistory), HttpStatus.CREATED);
+    public ResponseEntity<MedicalHistory> createMedicalHistory(@RequestBody MedicalHistoryCreateBody createBody) {
+        return new ResponseEntity<>(medicalHistoryService.createMedicalHistory(createBody), HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<MedicalHistory> updateMedicalHistory(@PathVariable Long id, @RequestBody MedicalHistory medicalHistory) {
-        try {
-            medicalHistoryService.getMedicalHistoryById(id);
-
-            medicalHistory.setId(id);
-            MedicalHistory updatedHistory = medicalHistoryService.saveMedicalHistory(medicalHistory);
-            return new ResponseEntity<>(updatedHistory, HttpStatus.OK);
-        } catch (ExceptionResourceNotFound e) {
-            throw e;
-        }
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<MedicalHistory> updateMedicalHistory(@PathVariable Long id, @RequestBody MedicalHistory medicalHistory) {
+//        try {
+//            medicalHistoryService.getMedicalHistoryById(id);
+//
+//            medicalHistory.setId(id);
+//            MedicalHistory updatedHistory = medicalHistoryService.createMedicalHistory(medicalHistory);
+//            return new ResponseEntity<>(updatedHistory, HttpStatus.OK);
+//        } catch (ExceptionResourceNotFound e) {
+//            throw e;
+//        }
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteMedicalHistory(@PathVariable Long id) {
