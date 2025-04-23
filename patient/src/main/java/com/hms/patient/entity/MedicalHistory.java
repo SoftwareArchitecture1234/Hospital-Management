@@ -2,7 +2,7 @@ package com.hms.patient.entity;
 
 import lombok.Data;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -20,4 +20,5 @@ public class MedicalHistory {
     private String diagnosis;
     private String treatment;
     private String notes;
+
 }

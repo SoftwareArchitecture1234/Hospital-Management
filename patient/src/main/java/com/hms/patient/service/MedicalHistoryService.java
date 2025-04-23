@@ -1,12 +1,16 @@
 package com.hms.patient.service;
 
 import com.hms.patient.entity.MedicalHistory;
+import com.hms.patient.exception.ExceptionResourceNotFound;
 import com.hms.patient.repository.MedicalHistoryRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class MedicalHistoryService {
@@ -14,16 +18,19 @@ public class MedicalHistoryService {
     @Autowired
     private MedicalHistoryRepo medicalHistoryRepo;
 
-    public List<MedicalHistory> getAllMedicalHistories() {
-        return medicalHistoryRepo.findAll();
+    public MedicalHistory getMedicalHistoryById(Long id) {
+        return medicalHistoryRepo.findById(id)
+                .orElseThrow(() -> new ExceptionResourceNotFound("MedicalHistory", "id", id));
     }
 
-    public Optional<MedicalHistory> getMedicalHistoryById(Long id) {
-        return medicalHistoryRepo.findById(id);
-    }
+    public Page<MedicalHistory> getMedicalHistoriesByParams(Long patientId, Date fromDate, Date toDate, int page, int limit) {
+        Pageable pageable = PageRequest.of(page, limit);
 
-    public List<MedicalHistory> getMedicalHistoriesByPatientId(Long patientId) {
-        return medicalHistoryRepo.findByPatientId(patientId);
+        if (patientId == null) {
+            return medicalHistoryRepo.findAll(pageable);
+        } else {
+            return medicalHistoryRepo.findByPatientIdAndDateRange(patientId, fromDate, toDate, pageable);
+        }
     }
 
     public MedicalHistory saveMedicalHistory(MedicalHistory medicalHistory) {
