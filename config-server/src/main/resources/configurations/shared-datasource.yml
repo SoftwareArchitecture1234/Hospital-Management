@@ -1,27 +1,14 @@
 spring:
-  application:
-    name: patient-service
-  config:
-    import: classpath:/shared-datasource.yml
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://avnadmin:AVNS_wflxLn-5DmvsoMpT-6k@mysql-17425251-hoanglong434gl-d94b.c.aivencloud.com:17032/defaultdb?ssl-mode=REQUIRED
     username: avnadmin
     password: AVNS_wflxLn-5DmvsoMpT-6k
+
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
-server:
-  port: 9091
-
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    fetchRegistry: true
-    registerWithEureka: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/
