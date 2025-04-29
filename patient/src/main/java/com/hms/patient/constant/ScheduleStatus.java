@@ -1,4 +1,4 @@
-package com.hms.patient.entity.schedule;
+package com.hms.patient.constant;
 
 public enum ScheduleStatus {
     PENDING,

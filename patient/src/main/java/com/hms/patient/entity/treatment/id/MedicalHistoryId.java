@@ -17,8 +17,7 @@ public class MedicalHistoryId implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof MedicalHistoryId)) return false;
-        MedicalHistoryId that = (MedicalHistoryId) o;
+        if (!(o instanceof MedicalHistoryId that)) return false;
         return (
                 patientId == that.patientId &&
                 doctorId == that.doctorId &&

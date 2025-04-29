@@ -1,5 +1,6 @@
 package com.hms.patient.entity.schedule;
 
+import com.hms.patient.constant.ScheduleStatus;
 import com.hms.patient.entity.user.doctor.DoctorEntity;
 import com.hms.patient.entity.user.patient.PatientEntity;
 import jakarta.persistence.*;

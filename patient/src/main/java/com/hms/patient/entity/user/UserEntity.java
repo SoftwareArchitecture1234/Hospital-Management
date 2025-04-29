@@ -1,22 +1,25 @@
 package com.hms.patient.entity.user;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.hms.patient.entity.role.RoleEntity;
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
 
 @Table(name = "User")
 @Entity
+@Getter @Setter
+@NoArgsConstructor
 public class UserEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private int userId;
 
     @Column(name = "name")
     private String name;
-
-    @Column(name = "username")
-    private String username;
 
     @Column(name = "email")
     private String email;
@@ -25,8 +28,11 @@ public class UserEntity {
     private String password;
 
     @Column(name = "phone")
-    private String phoneNumber;
+    private String phone;
 
     @Column(name = "location")
     private String location;
+
+    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RoleEntity> roles;
 }
