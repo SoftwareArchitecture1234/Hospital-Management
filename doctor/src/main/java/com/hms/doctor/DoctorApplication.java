@@ -1,13 +1,13 @@
-package com.hms.staffmanagement;
+package com.hms.doctor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class StaffmanagementApplication {
+public class DoctorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(StaffmanagementApplication.class, args);
+		SpringApplication.run(DoctorApplication.class, args);
 	}
 
 }

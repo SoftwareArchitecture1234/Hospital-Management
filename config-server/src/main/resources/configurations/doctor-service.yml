@@ -1,8 +1,7 @@
 spring:
   application:
-    name: patient-service
+    name: doctor-service
   config:
     import: classpath:/configurations/shared-datasource.yml
-
 server:
-  port: 9091
+  port: 8050
