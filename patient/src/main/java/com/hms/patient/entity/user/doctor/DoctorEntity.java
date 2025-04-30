@@ -1,7 +1,5 @@
 package com.hms.patient.entity.user.doctor;
 
-
-import com.hms.patient.entity.schedule.ScheduleEntity;
 import com.hms.patient.entity.user.UserEntity;
 import jakarta.persistence.*;
 
@@ -18,8 +16,4 @@ public class DoctorEntity {
     @OneToOne
     @JoinColumn(name = "doctor_id", referencedColumnName = "user_id")
     private UserEntity user;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id", insertable = false, updatable = false)
-    private ScheduleEntity scheduleEntity;
 }

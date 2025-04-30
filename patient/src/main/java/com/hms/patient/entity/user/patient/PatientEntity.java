@@ -1,7 +1,6 @@
 package com.hms.patient.entity.user.patient;
 
 import com.hms.patient.constant.Gender;
-import com.hms.patient.entity.schedule.ScheduleEntity;
 import com.hms.patient.entity.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -34,8 +33,4 @@ public class PatientEntity {
     @MapsId
     @JoinColumn(name = "patient_id", referencedColumnName = "user_id")
     private UserEntity user;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "patient_id", referencedColumnName = "patient_id", insertable = false, updatable = false)
-    private ScheduleEntity scheduleEntity;
 }
