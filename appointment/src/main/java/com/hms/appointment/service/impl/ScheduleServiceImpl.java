@@ -19,11 +19,24 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * ScheduleServiceImpl là lớp triển khai của IScheduleService.
+ * Nó cung cấp các phương thức để xử lý các yêu cầu liên quan đến lịch hẹn.
+ * @ scheduleRepository là một đối tượng truy cập dữ liệu cho lịch hẹn.
+ * @ workloadRepository là một đối tượng truy cập dữ liệu cho ca làm việc.
+ */
 @Service
 @AllArgsConstructor
 public class ScheduleServiceImpl implements IScheduleService {
     private final WorkloadRepository workloadRepository;
     private final ScheduleRepository scheduleRepository;
+
+    /**
+     * Lấy danh sách các ca làm việc còn trống dựa trên thông tin truy vấn.
+     *
+     * @param queryScheduleDto thông tin truy vấn lịch hẹn
+     * @return danh sách các ca làm việc còn trống
+     */
     @Override
     public List<AvailableTimeSlotDto> getAvailableSlots(QueryScheduleDto queryScheduleDto) {
         String dateExam = queryScheduleDto.getDateExam();
@@ -52,11 +65,25 @@ public class ScheduleServiceImpl implements IScheduleService {
         return availTimeSlot;
     }
 
+    /**
+     * Chuyển đổi chuỗi ngày tháng sang LocalDate.
+     *
+     * @param dateExam chuỗi ngày tháng
+     * @return LocalDate
+     */
     private LocalDate handleDateFromDateExam(String dateExam) {
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         return LocalDate.parse(dateExam, dateTimeFormatter);
     }
-
+    /**
+     * Lấy danh sách các ca làm việc còn trống.
+     *
+     * @param listWorkload danh sách các ca làm việc
+     * @param dateExam ngày khám
+     * @param startTime thời gian bắt đầu
+     * @param endTime thời gian kết thúc
+     * @return danh sách các ca làm việc còn trống
+     */
     private List<AvailableTimeSlotDto> getAvailableTimeSlotDto(
             List<WorkloadEntity> listWorkload,
             LocalDate dateExam,
