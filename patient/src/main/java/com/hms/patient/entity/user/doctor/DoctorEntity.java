@@ -14,12 +14,4 @@
 //
 //    @Column(name = "specialties")
 //    private String specialties;
-//
-//    @OneToOne
-//    @JoinColumn(name = "doctor_id", referencedColumnName = "user_id")
-//    private UserEntity user;
-//
-//    @OneToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "doctor_id", referencedColumnName = "doctor_id", insertable = false, updatable = false)
-//    private ScheduleEntity scheduleEntity;
 //}

@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: appointment-service
+  config:
+    import: classpath:/configurations/shared-datasource.yml
+server:
+  port: 9095
