@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://avnadmin:AVNS_wflxLn-5DmvsoMpT-6k@mysql-17425251-hoanglong434gl-d94b.c.aivencloud.com:17032/defaultdb?ssl-mode=REQUIRED
+    url: jdbc:mysql://avnadmin:AVNS_wflxLn-5DmvsoMpT-6k@mysql-17425251-hoanglong434gl-d94b.c.aivencloud.com:17032/devenv?ssl-mode=REQUIRED
     username: avnadmin
     password: AVNS_wflxLn-5DmvsoMpT-6k
 

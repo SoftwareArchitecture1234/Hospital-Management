@@ -2,6 +2,8 @@ package com.hms.auth.service.authService;
 
 import com.hms.auth.dto.LoginDto;
 import com.hms.auth.dto.UserDto;
+import com.hms.auth.entity.Doctor;
+import com.hms.auth.entity.Patient;
 import com.hms.auth.entity.Role;
 import com.hms.auth.entity.RoleType;
 import com.hms.auth.entity.User;
@@ -9,7 +11,8 @@ import com.hms.auth.exception.EmailAreadyExisted;
 import com.hms.auth.exception.InvalidException;
 import com.hms.auth.exception.UserNotFound;
 import com.hms.auth.exception.UsernameAlreadyExisted;
-import com.hms.auth.repository.RoleRepository;
+import com.hms.auth.repository.DoctorRepository;
+import com.hms.auth.repository.PatientRepository;
 import com.hms.auth.repository.UserRepository;
 import com.hms.auth.security.JwtTokenProvider;
 import lombok.AllArgsConstructor;
@@ -21,9 +24,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @AllArgsConstructor
@@ -33,43 +35,55 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
 
     @Autowired
-    private final RoleRepository roleRepository;
+    private final DoctorRepository doctorRepository;
+
+    @Autowired
+    private final PatientRepository patientRepository;
 
     private AuthenticationManager authenticationManager;
     private JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public User registerUser(UserDto signupRequest){
-        // Check if username is already taken
+    public User registerUser(UserDto signupRequest) {
         if (userRepository.existsByUsername(signupRequest.getUsername())) {
-            throw new UsernameAlreadyExisted("Username have already existed");
+            throw new UsernameAlreadyExisted("Username already exists");
         }
 
-        // Check if email is already in use
         if (userRepository.existsByEmail(signupRequest.getEmail())) {
-            throw new EmailAreadyExisted("Emai have already existed");
+            throw new EmailAreadyExisted("Email already exists");
         }
-        Set<Role> roles  = new HashSet<>();
-        roles.add(getRole(RoleType.ROLE_USER));
-
-        if(signupRequest.getRoles() != null){
-          signupRequest.getRoles().forEach(role -> {
-              Role newRole = getRole(RoleType.valueOf(role));
-              roles.add(newRole);
-          });
-        }
-
 
         User user = User.builder()
                 .name(signupRequest.getName())
                 .username(signupRequest.getUsername())
                 .email(signupRequest.getEmail())
                 .password(passwordEncoder.encode(signupRequest.getPassword()))
-                .roles(roles)
                 .build();
 
-        return userRepository.save(user);
+        List<Role> roles = signupRequest.getRoles().stream()
+                .map(roleName -> Role.builder()
+                        .roleName(RoleType.valueOf(roleName))
+                        .user(user)
+                        .build())
+                .toList();
+
+        user.setRoles(roles);
+        User savedUser = userRepository.save(user);
+
+        if(roles.stream().anyMatch(role -> role.getRoleName() == RoleType.ROLE_DOCTOR)){
+            Doctor doctor = Doctor.builder()
+            .user(savedUser)
+            .build();
+            doctorRepository.save(doctor);
+        } else if (roles.stream().anyMatch(role -> role.getRoleName() == RoleType.ROLE_PATIENT)) {
+            Patient patient = Patient.builder()
+                    .user(savedUser)
+                    .build();
+            patientRepository.save(patient);
+        }
+
+        return savedUser;
     }
 
     @Override
@@ -106,12 +120,39 @@ public class AuthServiceImpl implements AuthService {
                 .name(user.get().getName())
                 .username(user.get().getUsername())
                 .email(user.get().getEmail())
+                .password(user.get().getPassword())
                 .roles(user.get().getRoles())
                 .build();
     }
 
-    private Role getRole(RoleType roleType) {
-        return roleRepository.findByName(roleType.getCode())
-                .orElseThrow(() -> new RuntimeException("Role " + roleType + " not found"));
+    @Override
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
+
+    @Override
+    public User updateUser(Long id, UserDto userDto) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFound("User not found with ID: " + id));
+
+        existingUser.setName(userDto.getName());
+        existingUser.setUsername(userDto.getUsername());
+        existingUser.setEmail(userDto.getEmail());
+        existingUser.setLocation(userDto.getLocation());
+        existingUser.setPhone(userDto.getPhone());
+        existingUser.setPassword(userDto.getPassword());
+
+        return userRepository.save(existingUser);
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFound("User not found with ID: " + id));
+        doctorRepository.findByUser(user).ifPresent(doctorRepository::delete);
+        patientRepository.findByUser(user).ifPresent(patientRepository::delete);
+
+        userRepository.delete(user);
+    }
+
 }

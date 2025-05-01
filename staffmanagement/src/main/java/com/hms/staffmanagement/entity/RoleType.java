@@ -1,4 +1,4 @@
-package com.hms.auth.entity;
+package com.hms.staffmanagement.entity;
 
 import lombok.Getter;
 

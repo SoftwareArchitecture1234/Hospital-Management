@@ -18,6 +18,6 @@ public class UserProfileResponse {
 
     private String message;
 
-    private Long role;
+//    private Long role;
 
 }

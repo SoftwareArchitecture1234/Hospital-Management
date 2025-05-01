@@ -32,7 +32,7 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
                 throw new RuntimeException("Missing or invalid Authorization header");
             }
 
-            String token = authHeader.substring(7); // Loại bỏ tiền tố "Bearer "
+            String token = authHeader.substring(7);
 
             if (!jwtTokenProvider.validateToken(token)) {
                 throw new RuntimeException("Invalid JWT token");

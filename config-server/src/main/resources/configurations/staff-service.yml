@@ -2,7 +2,8 @@ spring:
   application:
     name: staff-service
   config:
-    import: classpath:/shared-datasource.yml
+    import: classpath:/configurations/shared-datasource.yml
+
 server:
   port: 8050
 
