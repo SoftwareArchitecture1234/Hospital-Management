@@ -1,6 +1,5 @@
 package com.hms.patient.entity.treatment;
 
-import com.hms.patient.entity.invoice.InvoiceEntity;
 import com.hms.patient.entity.treatment.id.MedicalHistoryId;
 import com.hms.patient.entity.treatment.medical.MedicalHistoryMedicineEntity;
 import com.hms.patient.entity.treatment.symptom.MedicalHistorySymptom;
@@ -37,9 +36,9 @@ public class MedicalHistory {
     @Column(name= "invoice_id")
     private int invoiceId;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id", insertable = false, updatable = false)
-    private InvoiceEntity invoiceEntity;
+//    @OneToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id", insertable = false, updatable = false)
+//    private InvoiceEntity invoiceEntity;
 
     @OneToMany(mappedBy = "medicalHistory", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<MedicalHistorySymptom> medicalHistorySymptoms;

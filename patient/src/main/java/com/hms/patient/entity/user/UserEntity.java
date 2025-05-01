@@ -1,15 +1,12 @@
 package com.hms.patient.entity.user;
 
-import com.hms.patient.entity.role.RoleEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
-
-@Table(name = "User")
 @Entity
+@Table(name = "User")
 @Getter @Setter
 @NoArgsConstructor
 public class UserEntity {
@@ -33,6 +30,6 @@ public class UserEntity {
     @Column(name = "location")
     private String location;
 
-    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<RoleEntity> roles;
+//    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    private List<RoleEntity> roles;
 }
