@@ -1,11 +1,14 @@
 package com.hms.patient.entity.treatment.symptom;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Table(name = "Symptom")
 @Entity
+@Getter @Setter
 public class SymptomEntity {
     @Id
     @Column(name = "symptom_id")
