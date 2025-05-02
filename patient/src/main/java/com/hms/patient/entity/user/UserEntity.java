@@ -29,7 +29,4 @@ public class UserEntity {
 
     @Column(name = "location")
     private String location;
-
-//    @OneToMany(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    private List<RoleEntity> roles;
 }

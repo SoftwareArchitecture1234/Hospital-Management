@@ -1,9 +1,11 @@
 package com.hms.appointment.service.impl;
 
+import com.hms.appointment.constant.ScheduleStatus;
 import com.hms.appointment.constant.ShiftType;
 import com.hms.appointment.constant.TypeOfWork;
 import com.hms.appointment.dtos.schedule.AvailableTimeSlotDto;
 import com.hms.appointment.dtos.schedule.QueryScheduleDto;
+import com.hms.appointment.dtos.schedule.RequestScheduleDto;
 import com.hms.appointment.entity.schedule.ScheduleEntity;
 import com.hms.appointment.entity.workload.WorkloadEntity;
 import com.hms.appointment.mapper.EntityMapper;
@@ -100,5 +102,36 @@ public class ScheduleServiceImpl implements IScheduleService {
                 })
                 .map(EntityMapper::workloadEntityToDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean requestSchedule(RequestScheduleDto requestScheduleDto) {
+        WorkloadEntity listWorkload = workloadRepository.findAvailableWorkloadByDoctorId(
+                requestScheduleDto.getDoctorId(),
+                requestScheduleDto.getDateExam(),
+                requestScheduleDto.getStartTime(),
+                requestScheduleDto.getEndTime(),
+                TypeOfWork.valueOf(requestScheduleDto.getTypeOfWork()).getTypeOfWork()
+        ).orElseThrow(() -> new RuntimeException("Ca làm việc không tồn tại"));
+
+        ScheduleEntity scheduleEntity = scheduleRepository.findScheduleByDoctorIdAndDate(
+                requestScheduleDto.getDateExam(),
+                requestScheduleDto.getStartTime(),
+                requestScheduleDto.getEndTime(),
+                requestScheduleDto.getDoctorId()
+        );
+        if (scheduleEntity != null) {
+            throw new RuntimeException("Lịch hẹn đã tồn tại");
+        } else {
+            ScheduleEntity newSchedule = new ScheduleEntity();
+            newSchedule.setDoctorId(requestScheduleDto.getDoctorId());
+            newSchedule.setPatientId(requestScheduleDto.getPatientId());
+            newSchedule.setStartTime(requestScheduleDto.getStartTime());
+            newSchedule.setEndTime(requestScheduleDto.getEndTime());
+            newSchedule.setDate(requestScheduleDto.getDateExam());
+            newSchedule.setStatus(ScheduleStatus.PENDING);
+            scheduleRepository.save(newSchedule);
+            return true;
+        }
     }
 }

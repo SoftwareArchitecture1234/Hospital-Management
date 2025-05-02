@@ -1,4 +1,4 @@
-package com.hms.patient.connection.schedule;
+package com.hms.patient.service.connection.schedule;
 
 import com.hms.patient.dtos.schedule.AvailableTimeSlotDto;
 import com.hms.patient.dtos.schedule.QueryScheduleDto;

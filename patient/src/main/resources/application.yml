@@ -5,3 +5,12 @@ spring:
     import: optional:configserver:http://localhost:8888
   application:
     name: patient-service
+
+hms:
+  rabbitmq:
+    exchange:
+      name: "hms.patient.schedule.exchange"
+    routing:
+      key: "hms.patient.schedule.routing"
+    queue:
+      name: "hms.patient.schedule.queue"

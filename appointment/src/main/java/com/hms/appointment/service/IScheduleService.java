@@ -2,6 +2,7 @@ package com.hms.appointment.service;
 
 import com.hms.appointment.dtos.schedule.AvailableTimeSlotDto;
 import com.hms.appointment.dtos.schedule.QueryScheduleDto;
+import com.hms.appointment.dtos.schedule.RequestScheduleDto;
 
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface IScheduleService {
      * @return danh sách các ca làm việc còn trống
      */
     List<AvailableTimeSlotDto> getAvailableSlots(QueryScheduleDto queryScheduleDto);
+
+    boolean requestSchedule(RequestScheduleDto requestScheduleDto);
 }

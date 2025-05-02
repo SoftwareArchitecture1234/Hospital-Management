@@ -13,7 +13,7 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Intege
             SELECT * FROM schedule s
             WHERE s.date = :date
             AND s.start_time >= :startTime
-            AND s.end_time <= :endTime
+            OR s.end_time <= :endTime
             AND s.doctor_id = :doctorId"""
     )
     ScheduleEntity findScheduleByDoctorIdAndDate(
