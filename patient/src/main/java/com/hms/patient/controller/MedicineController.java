@@ -61,8 +61,8 @@ public class MedicineController {
                     )
             )
     )
-    @PostMapping("/list")
-    public ResponseEntity<List<MedicineDto>> listMedicines(@RequestBody MedicineQueryDto medicineQueryDto) {
+    @GetMapping("/list")
+    public ResponseEntity<List<MedicineDto>> listMedicines(MedicineQueryDto medicineQueryDto) {
         List<MedicineDto> medicines = medicineService.listMedicines(medicineQueryDto);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(medicines);
@@ -92,7 +92,7 @@ public class MedicineController {
                     )
             )
     )
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<MedicineDto> getMedicineById(@PathVariable("id") int id) {
         MedicineDto medicineDto = medicineService.getMedicineById(id);
         return ResponseEntity.status(HttpStatus.OK)
@@ -130,10 +130,10 @@ public class MedicineController {
             )
     )
     @PostMapping("/create")
-    public ResponseEntity<Integer> createMedicine(@RequestBody MedicineDto medicineDto) {
-        int medicineId = medicineService.createMedicine(medicineDto);
+    public ResponseEntity<String> createMedicine(@RequestBody MedicineDto medicineDto) {
+        medicineService.createMedicine(medicineDto);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(medicineId);
+                .body("Medicine created successfully");
     }
 
     /**
@@ -196,7 +196,7 @@ public class MedicineController {
                     )
             )
     )
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteMedicine(@PathVariable("id") int id) {
         medicineService.deleteMedicine(id);
         return ResponseEntity.ok("Medicine deleted successfully");

@@ -48,12 +48,11 @@ public class MedicineServiceImply implements MedicineServiceInterface {
     }
 
     @Override
-    public int createMedicine(MedicineDto medicineDto) {
+    public void createMedicine(MedicineDto medicineDto) {
         MedicineEntity medicineEntity = MedicineMapper.toEntity(medicineDto);
 
         if (medicineEntity != null) {
             MedicineEntity savedEntity = medicineRepository.save(medicineEntity);
-            return savedEntity.getMedicineId();
         } else {
             throw new IllegalArgumentException("Medicine entity cannot be null");
         }

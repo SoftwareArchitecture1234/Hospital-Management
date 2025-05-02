@@ -23,7 +23,7 @@ public class MedicineEntity {
     private String medicineDetails;
 
     @Column(name = "amount")
-    private int amount;
+    private Integer amount;
 
     @OneToMany(mappedBy = "medicineEntity", fetch = FetchType.LAZY)
     private List<MedicalHistoryMedicineEntity> medicalHistoryMedicines;

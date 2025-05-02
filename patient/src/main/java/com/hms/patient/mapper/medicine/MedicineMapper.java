@@ -14,7 +14,7 @@ public class MedicineMapper {
         medicineEntity.setMedicineName(medicineDto.getMedicineName());
         medicineEntity.setMedicineType(medicineDto.getMedicineType());
         medicineEntity.setMedicineDetails(medicineDto.getMedicineDetails());
-        medicineEntity.setAmount(medicineDto.getAmount());
+        medicineEntity.setAmount(medicineDto.getAmount() != null ? medicineDto.getAmount() : 0);
 
         return medicineEntity;
     }
@@ -29,7 +29,7 @@ public class MedicineMapper {
         medicineDto.setMedicineName(medicineEntity.getMedicineName());
         medicineDto.setMedicineType(medicineEntity.getMedicineType());
         medicineDto.setMedicineDetails(medicineEntity.getMedicineDetails());
-        medicineDto.setAmount(medicineEntity.getAmount());
+        medicineDto.setAmount(medicineEntity.getAmount() != null ? medicineEntity.getAmount() : 0);
 
         return medicineDto;
     }

@@ -25,7 +25,7 @@ public interface MedicineServiceInterface {
      * @param medicineDto thông tin thuốc
      * @return ID của thuốc đã tạo
      */
-    int createMedicine(MedicineDto medicineDto);
+    void createMedicine(MedicineDto medicineDto);
 
     /**
      * Cập nhật thông tin thuốc.

@@ -48,5 +48,5 @@ public class MedicineDto {
             description = "Số lượng có sẵn",
             example = "100"
     )
-    private int amount;
+    private Integer amount;
 }
