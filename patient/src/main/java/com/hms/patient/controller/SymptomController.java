@@ -63,8 +63,8 @@ public class SymptomController {
                     )
             )
     )
-    @PostMapping("/list")
-    public ResponseEntity<List<SymptomDto>> listSymptoms(@RequestBody SymptomQueryDto symptomQueryDto) {
+    @GetMapping("/list")
+    public ResponseEntity<List<SymptomDto>> listSymptoms(SymptomQueryDto symptomQueryDto) {
         List<SymptomDto> symptoms = symptomService.listSymptoms(symptomQueryDto);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(symptoms);
@@ -94,7 +94,7 @@ public class SymptomController {
                     )
             )
     )
-    @GetMapping("/{id}")
+    @GetMapping("/get/{id}")
     public ResponseEntity<SymptomDto> getSymptomById(@PathVariable("id") int id) {
         SymptomDto symptomDto = symptomService.getSymptomById(id);
         return ResponseEntity.status(HttpStatus.OK)
@@ -132,10 +132,10 @@ public class SymptomController {
             )
     )
     @PostMapping("/create")
-    public ResponseEntity<Integer> createSymptom(@RequestBody SymptomDto symptomDto) {
-        int symptomId = symptomService.createSymptom(symptomDto);
+    public ResponseEntity<String> createSymptom(@RequestBody SymptomDto symptomDto) {
+        symptomService.createSymptom(symptomDto);
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(symptomId);
+                .body("Symptom created successfully");
     }
 
     /**
@@ -198,7 +198,7 @@ public class SymptomController {
                     )
             )
     )
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteSymptom(@PathVariable("id") int id) {
         symptomService.deleteSymptom(id);
         return ResponseEntity.ok("Symptom deleted successfully");

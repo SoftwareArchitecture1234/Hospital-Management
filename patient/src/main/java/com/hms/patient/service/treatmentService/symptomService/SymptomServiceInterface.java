@@ -25,7 +25,7 @@ public interface SymptomServiceInterface {
      * @param symptomDto thông tin triệu chứng
      * @return ID của triệu chứng đã tạo
      */
-    int createSymptom(SymptomDto symptomDto);
+    void createSymptom(SymptomDto symptomDto);
 
     /**
      * Cập nhật thông tin triệu chứng.

@@ -48,12 +48,11 @@ public class SymptomServiceImply implements SymptomServiceInterface {
     }
 
     @Override
-    public int createSymptom(SymptomDto symptomDto) {
+    public void createSymptom(SymptomDto symptomDto) {
         SymptomEntity symptomEntity = SymptomMapper.toEntity(symptomDto);
 
         if (symptomEntity != null) {
             SymptomEntity savedEntity = symptomRepository.save(symptomEntity);
-            return savedEntity.getSymptomId();
         } else {
             throw new IllegalArgumentException("Symptom entity cannot be null");
         }
