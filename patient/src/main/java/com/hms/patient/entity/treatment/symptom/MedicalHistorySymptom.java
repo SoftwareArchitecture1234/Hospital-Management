@@ -3,10 +3,13 @@ package com.hms.patient.entity.treatment.symptom;
 import com.hms.patient.entity.treatment.MedicalHistory;
 import com.hms.patient.entity.treatment.id.MedicalHistorySymptomId;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter @Setter
 @IdClass(MedicalHistorySymptomId.class)
 @Table(name = "medical_history_symptom")
 public class MedicalHistorySymptom {
@@ -37,6 +40,4 @@ public class MedicalHistorySymptom {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "symptom_id", insertable = false, updatable = false)
     private SymptomEntity symptomEntity;
-
 }
-

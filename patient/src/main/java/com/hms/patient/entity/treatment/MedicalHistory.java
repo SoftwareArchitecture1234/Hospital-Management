@@ -4,11 +4,14 @@ import com.hms.patient.entity.treatment.id.MedicalHistoryId;
 import com.hms.patient.entity.treatment.medical.MedicalHistoryMedicineEntity;
 import com.hms.patient.entity.treatment.symptom.MedicalHistorySymptom;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Getter @Setter
 @Table(name = "Medical_History")
 @IdClass(MedicalHistoryId.class)
 public class MedicalHistory {
@@ -34,7 +37,7 @@ public class MedicalHistory {
     private String notes;
 
     @Column(name= "invoice_id")
-    private int invoiceId;
+    private String invoiceId;
 
 //    @OneToOne(fetch = FetchType.LAZY)
 //    @JoinColumn(name = "invoice_id", referencedColumnName = "invoice_id", insertable = false, updatable = false)

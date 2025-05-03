@@ -1,4 +1,4 @@
-package com.hms.patient.dtos.treatment;
+package com.hms.patient.dtos.treatment.medicalHistory;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -7,17 +7,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Schema(
-        name = "MedicalHistoryCreateDto",
+        name = "MedicalHistoryDto",
         description = "Đối tượng này đại diện cho thông tin lịch sử khám bệnh trong hệ thống."
 )
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class MedicalHistoryCreateDto {
+public class MedicalHistoryDto {
     @Schema(
             name = "patientId",
             description = "ID của bệnh nhân",
@@ -31,6 +30,13 @@ public class MedicalHistoryCreateDto {
             example = "2"
     )
     private int doctorId;
+
+    @Schema(
+            name = "dateModify",
+            description = "Thời gian tạo/cập nhật",
+            example = "2023-04-15T10:30:00"
+    )
+    private LocalDateTime dateModify;
 
     @Schema(
             name = "typeOfTreatment",
@@ -58,17 +64,5 @@ public class MedicalHistoryCreateDto {
             description = "ID của hóa đơn",
             example = "3"
     )
-    private int invoiceId;
-
-    @Schema(
-            name = "symptomIds",
-            description = "Danh sách các triệu chứng"
-    )
-    private List<Integer> symptomIds;
-
-    @Schema(
-            name = "medicineIds",
-            description = "Danh sách các thuốc"
-    )
-    private List<Integer> medicineIds;
+    private String invoiceId;
 }

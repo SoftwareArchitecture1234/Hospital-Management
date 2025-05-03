@@ -3,11 +3,14 @@ package com.hms.patient.entity.treatment.medical;
 import com.hms.patient.entity.treatment.MedicalHistory;
 import com.hms.patient.entity.treatment.id.MedicalHistoryMedicineId;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Entity
+@Getter @Setter
 @Table(name = "medical_history_medicine")
 @IdClass(MedicalHistoryMedicineId.class)
 public class MedicalHistoryMedicineEntity implements Serializable {

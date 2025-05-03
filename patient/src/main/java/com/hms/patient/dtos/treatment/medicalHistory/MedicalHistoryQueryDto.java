@@ -1,4 +1,4 @@
-package com.hms.patient.dtos.treatment;
+package com.hms.patient.dtos.treatment.medicalHistory;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -15,13 +15,26 @@ import lombok.*;
 )
 
 public class MedicalHistoryQueryDto {
-
     @Schema(
             name = "patientId",
             description = "Patient ID",
             example = "1"
     )
     private int patientId;
+
+    @Schema(
+            name = "doctorId",
+            description = "Patient ID",
+            example = "1"
+    )
+    private int doctorId;
+
+    @Schema(
+            name = "dateModify",
+            description = "Patient ID",
+            example = "1"
+    )
+    private int dateModify;
 
     @Schema(
             name = "fromDate",
