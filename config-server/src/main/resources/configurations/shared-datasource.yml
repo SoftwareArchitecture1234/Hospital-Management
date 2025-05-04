@@ -4,7 +4,11 @@ spring:
     url: jdbc:mysql://avnadmin:AVNS_wflxLn-5DmvsoMpT-6k@mysql-17425251-hoanglong434gl-d94b.c.aivencloud.com:17032/defaultdb?ssl-mode=REQUIRED
     username: avnadmin
     password: AVNS_wflxLn-5DmvsoMpT-6k
-
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: admin
+    password: secret
   jpa:
     hibernate:
       ddl-auto: update
@@ -33,3 +37,5 @@ eureka:
     registerWithEureka: true
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
+
+# docker run -d --hostname my-rabbit --name some-rabbit -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=secret -p 5672:5672 -p 15672:15672 rabbitmq:3-management

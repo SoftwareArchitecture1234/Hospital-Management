@@ -14,7 +14,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PatientDto extends AccountDto{
+public class PatientDto {
+    @Schema(
+            name = "userId",
+            description = "ID của người dùng",
+            example = "1"
+    )
+    private int userId;
+
     @Schema(
             name = "age",
             description = "Tuổi của bệnh nhân",

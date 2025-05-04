@@ -8,6 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Schema(
         name = "PatientQueryDto",
         description = "Patient Query DTO"
@@ -28,8 +29,10 @@ public class PatientQueryDto {
     )
     private String phone;
 
-    public PatientQueryDto(String email, String phone) {
-        this.email = email;
-        this.phone = phone;
-    }
+    @Schema(
+            name = "patientId",
+            description = "Patient ID",
+            example = "1"
+    )
+    private int patientId;
 }
