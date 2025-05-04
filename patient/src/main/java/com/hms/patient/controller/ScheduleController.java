@@ -108,4 +108,20 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body("Request schedule successfully");
     }
+
+    @PostMapping("/cancel")
+    public ResponseEntity<String> cancelSchedule(@RequestBody RequestScheduleDto request) {
+        request.setMessageType("CANCEL");
+        scheduleService.sendScheduleMessage(request);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Cancel schedule successfully");
+    }
+
+    @PostMapping("/reschedule")
+    public ResponseEntity<String> reSchedule(@RequestBody RequestScheduleDto request) {
+        request.setMessageType("RESCHEDULE");
+        scheduleService.sendScheduleMessage(request);
+        return ResponseEntity.status(HttpStatus.OK)
+                .body("Reschedule successfully");
+    }
 }

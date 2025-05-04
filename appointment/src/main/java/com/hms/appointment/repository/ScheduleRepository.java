@@ -22,4 +22,23 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Intege
             LocalTime endTime,
             int doctorId
     );
+
+    @Query(nativeQuery = true,
+            value = """
+            DELETE FROM schedule 
+            WHERE schedule_id = (
+                SELECT schedule_id FROM (
+                SELECT schedule_id
+                FROM schedule 
+                WHERE doctor_id = :doctor_id AND patient_id = :patient_id
+                ORDER BY start_time DESC
+                LIMIT 1
+                ) AS sub
+            )
+            """
+    )
+    void cancelSchedule(
+            int patient_id,
+            int doctor_id
+    );
 }

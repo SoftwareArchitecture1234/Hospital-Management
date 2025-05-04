@@ -134,4 +134,24 @@ public class ScheduleServiceImpl implements IScheduleService {
             return true;
         }
     }
+
+    @Override
+    public boolean reSchedule(RequestScheduleDto requestScheduleDto) {
+        
+        boolean i = this.cancelSchedule(requestScheduleDto);
+        if (i) {
+            return this.requestSchedule(requestScheduleDto); 
+        }
+        return false;
+    }
+
+    @Override
+    public boolean cancelSchedule(RequestScheduleDto requestScheduleDto) {
+        if (requestScheduleDto.getPatientId() == 0 || requestScheduleDto.getDoctorId() == 0) {
+            throw new RuntimeException("Lịch hẹn chưa tồn tại");
+        } else {
+            scheduleRepository.cancelSchedule(requestScheduleDto.getPatientId(), requestScheduleDto.getDoctorId());
+            return true;
+        }
+    }
 }
