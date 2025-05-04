@@ -1,11 +1,14 @@
 package com.hms.patient.entity.treatment.medical;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Table(name = "Medicine")
 @Entity
+@Getter @Setter
 public class MedicineEntity {
     @Id
     private int medicineId;
@@ -20,7 +23,7 @@ public class MedicineEntity {
     private String medicineDetails;
 
     @Column(name = "amount")
-    private int amount;
+    private Integer amount;
 
     @OneToMany(mappedBy = "medicineEntity", fetch = FetchType.LAZY)
     private List<MedicalHistoryMedicineEntity> medicalHistoryMedicines;
