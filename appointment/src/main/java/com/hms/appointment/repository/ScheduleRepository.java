@@ -1,7 +1,9 @@
 package com.hms.appointment.repository;
 
 import com.hms.appointment.entity.schedule.ScheduleEntity;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
@@ -23,6 +25,8 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Intege
             int doctorId
     );
 
+    @Modifying
+    @Transactional
     @Query(nativeQuery = true,
             value = """
             DELETE FROM schedule 

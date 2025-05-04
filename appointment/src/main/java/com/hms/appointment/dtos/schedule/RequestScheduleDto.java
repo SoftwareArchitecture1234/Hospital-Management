@@ -61,6 +61,7 @@ public class RequestScheduleDto {
         LocalTime endTime = LocalTime.parse(parts[4].split("=")[1]);
         String typeOfWork = parts[5].split("=")[1];
         String messageType = parts[6].split("=")[1];
+        messageType = messageType.replace(")", "");
 
         return new RequestScheduleDto(doctorId, patientId, dateExam, startTime, endTime, typeOfWork, messageType);
     }
