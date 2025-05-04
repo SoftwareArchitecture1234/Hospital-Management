@@ -50,7 +50,7 @@ public class RequestScheduleDto {
             description = "Loại thông điệp (CREATE, CANCEL)",
             example = "CREATE"
     )
-    String messageType; // CREATE, CANCEL
+    String messageType; // CREATE, CANCEL, RESCHEDULE
 
     public static RequestScheduleDto fromString(String message) {
         String[] parts = message.split(",");

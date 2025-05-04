@@ -20,4 +20,8 @@ public interface IScheduleService {
     List<AvailableTimeSlotDto> getAvailableSlots(QueryScheduleDto queryScheduleDto);
 
     boolean requestSchedule(RequestScheduleDto requestScheduleDto);
+
+    boolean reSchedule(RequestScheduleDto requestScheduleDto);
+
+    boolean cancelSchedule(RequestScheduleDto requestScheduleDto);
 }

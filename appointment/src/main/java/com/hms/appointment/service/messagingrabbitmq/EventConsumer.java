@@ -20,7 +20,18 @@ public class EventConsumer {
         System.out.println("Message received from RabbitMQ: " + message);
         try {
             RequestScheduleDto requestScheduleDto = RequestScheduleDto.fromString(message);
-            scheduleService.requestSchedule(requestScheduleDto);
+            if (requestScheduleDto.getMessageType().equals("CREATE")) {
+                scheduleService.requestSchedule(requestScheduleDto);
+            }
+            else if(requestScheduleDto.getMessageType().equals("CANCEL")){
+                scheduleService.cancelSchedule(requestScheduleDto);
+            } 
+            else if(requestScheduleDto.getMessageType().equals("RESCHEDULE")){
+                scheduleService.reSchedule(requestScheduleDto);
+            }
+            else {
+                throw new RuntimeException("request khong ton tai");
+            }
         } catch (Exception e) {
             eventPublisherInterface.sendErrorMessage("Error processing message: " + e.getMessage(), "patient");
         }
