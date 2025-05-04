@@ -3,8 +3,15 @@ spring:
     name: patient-service
   config:
     import: classpath:/shared-datasource.yml
+
 server:
   port: 9091
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
 
 eureka:
   instance:

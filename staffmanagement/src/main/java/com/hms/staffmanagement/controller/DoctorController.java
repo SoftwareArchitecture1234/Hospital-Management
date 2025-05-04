@@ -1,5 +1,6 @@
 package com.hms.staffmanagement.controller;
 
+import com.hms.staffmanagement.dto.DoctorDto;
 import com.hms.staffmanagement.entity.Doctor;
 import com.hms.staffmanagement.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,12 @@ public class DoctorController {
     @Autowired
     private DoctorService doctorService;
 
+    @PostMapping
+    public ResponseEntity<String> createDoctor(@RequestBody DoctorDto doctorDto) {
+        doctorService.createDoctor(doctorDto);
+        return ResponseEntity.ok("Doctor created successfully");
+    }
+
     @GetMapping
     public ResponseEntity<List<Doctor>> getAllDoctors() {
         return ResponseEntity.ok(doctorService.getAllDoctors());
@@ -25,14 +32,9 @@ public class DoctorController {
         return ResponseEntity.ok(doctorService.getDoctorById(id));
     }
 
-    @PostMapping
-    public ResponseEntity<Doctor> createDoctor(@RequestBody Doctor doctor) {
-        return ResponseEntity.ok(doctorService.createDoctor(doctor));
-    }
-
     @PutMapping("/{id}")
-    public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody Doctor doctor) {
-        return ResponseEntity.ok(doctorService.updateDoctor(id, doctor));
+    public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody DoctorDto doctorDto) {
+        return ResponseEntity.ok(doctorService.updateDoctor(id, doctorDto));
     }
 
     @DeleteMapping("/{id}")

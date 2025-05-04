@@ -1,6 +1,9 @@
 package com.hms.gateway.config;
 
 import com.hms.gateway.security.JwtTokenProvider;
+
+import java.util.List;
+
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +17,15 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    private static final List<String> EXEMPT_PATHS = List.of(
+        "/api/v1/doctors",
+        "/auth-service/v3/api-docs",
+        "/auth-service/swagger-ui.html",
+        "/patient-service/v3/api-docs",
+        "/patient-service/swagger-ui.html",
+        "/staff-service/v3/api-docs",
+        "/staff-service/swagger-ui.html");
+
     public AuthFilter(JwtTokenProvider jwtTokenProvider) {
         super(Config.class);
         this.jwtTokenProvider = jwtTokenProvider;
@@ -26,6 +38,13 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
+            String path = exchange.getRequest().getURI().getPath();
+            String method = exchange.getRequest().getMethod().name();
+
+            if (EXEMPT_PATHS.contains(path) && "POST".equalsIgnoreCase(method)) {
+                return chain.filter(exchange);
+            }
+            
             String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {

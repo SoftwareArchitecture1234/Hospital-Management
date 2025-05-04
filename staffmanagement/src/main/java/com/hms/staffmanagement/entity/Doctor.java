@@ -1,6 +1,8 @@
 package com.hms.staffmanagement.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "doctors")
 public class Doctor {
 
@@ -22,5 +26,5 @@ public class Doctor {
     private User user; 
 
     @Column(length = 255)
-    private String specialties;
+    private String specialized;
 }

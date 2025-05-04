@@ -1,6 +1,8 @@
 package com.hms.staffmanagement.service;
 
+import com.hms.staffmanagement.dto.DoctorDto;
 import com.hms.staffmanagement.entity.Doctor;
+import com.hms.staffmanagement.entity.User;
 import com.hms.staffmanagement.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,17 @@ public class DoctorService {
 
     @Autowired
     private DoctorRepository doctorRepository;
+
+    public void createDoctor(DoctorDto doctorDto) {
+        User user = new User();
+        user.setUserId(doctorDto.getUserId());
+        Doctor doctor = Doctor.builder()
+                .user(user)
+                .specialized(doctorDto.getSpecialized())
+                .build();
+
+        doctorRepository.save(doctor);
+    }
 
     public List<Doctor> getAllDoctors() {
         return doctorRepository.findAll();
@@ -26,10 +39,9 @@ public class DoctorService {
         return doctorRepository.save(doctor);
     }
 
-    public Doctor updateDoctor(Long id, Doctor updatedDoctor) {
+    public Doctor updateDoctor(Long id, DoctorDto updatedDoctor) {
         Doctor existingDoctor = getDoctorById(id);
-        existingDoctor.setSpecialties(updatedDoctor.getSpecialties());
-        existingDoctor.setUser(updatedDoctor.getUser());
+        existingDoctor.setSpecialized(updatedDoctor.getSpecialized());
         return doctorRepository.save(existingDoctor);
     }
 

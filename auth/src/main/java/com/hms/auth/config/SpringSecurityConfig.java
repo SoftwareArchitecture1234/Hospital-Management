@@ -43,7 +43,7 @@ public class SpringSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests((authorize) -> {
 //                    authorize.requestMatchers(HttpMethod.POST, "/api/**").hasRole("ADMIN");
-                    // authorize.requestMatchers(HttpMethod.GET, "/api/**").hasRole("ADMIN");
+                    // authorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN", "DOCTOR", "PATIENT");
 //                    authorize.requestMatchers(HttpMethod.DELETE, "/api/**").hasRole("ADMIN");
 //                    authorize.requestMatchers(HttpMethod.GET, "/api/**").hasAnyRole("ADMIN", "USER");
 //                    authorize.requestMatchers(HttpMethod.PATCH, "/api/**").hasAnyRole("ADMIN", "USER");
@@ -54,8 +54,8 @@ public class SpringSecurityConfig {
                     authorize.anyRequest().authenticated();
                 }).httpBasic(Customizer.withDefaults());
 
-//        http.exceptionHandling( exception -> exception
-//                .authenticationEntryPoint(authenticationEntryPoint));
+       http.exceptionHandling( exception -> exception
+               .authenticationEntryPoint(authenticationEntryPoint));
 
         http.addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
