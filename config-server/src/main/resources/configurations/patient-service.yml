@@ -1,14 +1,8 @@
 spring:
   application:
     name: patient-service
+  config:
+    import: classpath:/configurations/shared-datasource.yml
+
 server:
   port: 9091
-
-eureka:
-  instance:
-    preferIpAddress: true
-  client:
-    fetchRegistry: true
-    registerWithEureka: true
-    serviceUrl:
-      defaultZone: http://localhost:8761/eureka/

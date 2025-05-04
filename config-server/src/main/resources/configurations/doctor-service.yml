@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: doctor-service
+  config:
+    import: classpath:/configurations/shared-datasource.yml
+server:
+  port: 8050

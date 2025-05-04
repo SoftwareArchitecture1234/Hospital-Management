@@ -1,57 +1,87 @@
 package com.hms.auth.controller;
 
-import com.hms.auth.dto.AuthRequest;
-import com.hms.auth.dto.AuthResponse;
-import com.hms.auth.dto.LoginRequest;
-import com.hms.auth.service.AuthService;
+import com.hms.auth.dto.JwtAuthResponse;
+import com.hms.auth.dto.LoginDto;
+import com.hms.auth.dto.RegisterRespone;
+import com.hms.auth.dto.UserDto;
+import com.hms.auth.entity.User;
+import com.hms.auth.exception.EmailAreadyExisted;
+import com.hms.auth.exception.InvalidException;
+import com.hms.auth.exception.UsernameAlreadyExisted;
+import com.hms.auth.service.authService.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Authentication", description = "APIs for user authentication")
+@AllArgsConstructor
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
+@Tag(name = "Authentication", description = "Authentication API")
 public class AuthController {
-
     @Autowired
     private AuthService authService;
 
-    @Operation(
-        summary = "Authenticate user", 
-        description = "Authenticate a user by validating the provided username and password. Returns a JWT token upon successful authentication."
-    )
+    @Operation(summary = "Login", description = "Authenticates user credentials and returns JWT token")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Successfully authenticated", 
-                     content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthResponse.class))),
-        @ApiResponse(responseCode = "401", description = "Invalid username or password", 
-                     content = @Content(mediaType = "application/json"))
+            @ApiResponse(responseCode = "200", description = "Successfully authenticated",
+                    content = @Content(schema = @Schema(implementation = JwtAuthResponse.class))),
+            @ApiResponse(responseCode = "401", description = "Invalid credentials")
     })
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        String token = authService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
-        return ResponseEntity.ok(new AuthResponse(token));
+    public ResponseEntity<JwtAuthResponse> login(@RequestBody LoginDto loginDto){
+        try {
+            String token = authService.login(loginDto);
+
+            JwtAuthResponse jwtAuthResponse = new JwtAuthResponse();
+            jwtAuthResponse.setAccessToken(token);
+            jwtAuthResponse.setMessage("Login Successfully");
+
+            return new ResponseEntity<>(jwtAuthResponse, HttpStatus.OK);
+        }
+        catch (InvalidException e){
+            return ResponseEntity
+                    .status(HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()))
+                    .body(
+                            JwtAuthResponse.builder()
+                                    .message(e.getMessage())
+                                    .accessToken(null)
+                                    .build()
+                    );
+        }
     }
 
-    @Operation(
-        summary = "Register user", 
-        description = "Register a new user by providing necessary details."
-    )
+    @Operation(summary = "Register a new user", description = "Creates a new user account")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "201", description = "Successfully registered", 
-                     content = @Content(mediaType = "application/json")),
-        @ApiResponse(responseCode = "400", description = "Invalid input data", 
-                     content = @Content(mediaType = "application/json"))
+            @ApiResponse(responseCode = "201", description = "User registered successfully"),
+            @ApiResponse(responseCode = "400", description = "Username or email already exists")
     })
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> registerUser(@RequestBody AuthRequest authRequest) {
-        String token = authService.register(authRequest.getUsername(), authRequest.getPassword(), authRequest.getEmail());
-        return ResponseEntity.status(201).body(new AuthResponse(token));
+    public ResponseEntity<RegisterRespone> registerUser(@RequestBody UserDto signupRequest) {
+        try{
+            return ResponseEntity.ok(
+                    RegisterRespone.builder()
+                            .message("Register Successfully !!")
+                            .user(authService.registerUser(signupRequest))
+                            .build()
+            );
+        } catch (UsernameAlreadyExisted | EmailAreadyExisted e) {
+            return ResponseEntity
+                    .status(HttpStatusCode.valueOf(HttpStatus.BAD_REQUEST.value()))
+                    .body(
+                            RegisterRespone.builder()
+                                    .message(e.getMessage())
+                                    .build()
+                    );
+        }
     }
 
 }
