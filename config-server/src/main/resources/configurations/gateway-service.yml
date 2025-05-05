@@ -38,15 +38,15 @@ spring:
           filters:
             - AuthFilter
         - id: auth-service-docs
-          uri: http://localhost:8000
+          uri: lb://auth-service
           predicates:
             - Path=/auth-service/v3/api-docs
         - id: patient-service-docs
-          uri: http://localhost:9091
+          uri: lb://patient-service
           predicates:
             - Path=/patient-service/v3/api-docs
         - id: staff-service-docs
-          uri: http://localhost:8050
+          uri: lb://staff-service
           predicates:
             - Path=/staff-service/v3/api-docs
 
