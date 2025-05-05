@@ -1,47 +1,49 @@
 package com.hms.doctor.entity.workload;
 
-import java.time.LocalDateTime;
-
-import com.hms.doctor.constant.WorkloadStatus;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Table(name = "Workload")
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Getter
-@Setter
+@Table(name = "workload")
 public class WorkloadEntity {
 
   @Id
-  @Column(name = "workload_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int workloadId;
+  @Column(name = "workload_id")
+  private Long workloadId;
 
-  @Column(name = "doctor_id")
-  private int doctorId;
-
-  @Column(name = "date_of_week")
-  private String dateOfWeek;
-
-  @Column(name = "type_of_work")
-  private String typeOfWork;
+  @Column(name = "doctor_id", nullable = false)
+  private Integer doctorId;
 
   @Column(name = "shift")
   private String shift;
 
-  @Column(name = "time")
-  private LocalDateTime time;
+  @Column(name = "day_of_week")
+  private String dayOfWeek;
+
+  @Column(name = "type_of_work")
+  private String typeOfWork;
 
   @Column(name = "room")
   private String room;
 
-  @Column(name = "note", length = 1000)
+  @Column(name = "start_time")
+  private LocalTime startTime;
+
+  @Column(name = "end_time")
+  private LocalTime endTime;
+
+  @Column(name = "date")
+  private LocalDate date;
+
+  @Column(name = "note")
   private String note;
-
-  @Column(name = "status")
-  @Enumerated(EnumType.STRING)
-  private WorkloadStatus status;
-
-  // Getters và Setters (hoặc dùng Lombok nếu đã thêm Lombok)
 }

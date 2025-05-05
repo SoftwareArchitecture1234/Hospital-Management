@@ -1,44 +1,58 @@
 package com.hms.doctor.mapper.workload;
 
-import com.hms.doctor.dto.workload.WorkloadRequestDto;
-import com.hms.doctor.dto.workload.WorkloadResponseDto;
-import com.hms.doctor.dto.workload.WorkloadSummaryDto;
+import com.hms.doctor.dto.workload.WorkloadDTO;
+import com.hms.doctor.dto.workload.WorkloadSummaryDTO;
 import com.hms.doctor.entity.workload.WorkloadEntity;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class WorkloadMapper {
 
-  public static WorkloadEntity toEntity(WorkloadRequestDto dto) {
+  public static WorkloadDTO toDTO(WorkloadEntity entity) {
+    WorkloadDTO dto = new WorkloadDTO();
+    dto.setWorkloadId(entity.getWorkloadId());
+    dto.setDoctorId(entity.getDoctorId());
+    dto.setShift(entity.getShift());
+    dto.setDayOfWeek(entity.getDayOfWeek());
+    dto.setTypeOfWork(entity.getTypeOfWork());
+    dto.setRoom(entity.getRoom());
+    dto.setStartTime(entity.getStartTime());
+    dto.setEndTime(entity.getEndTime());
+    dto.setDate(entity.getDate());
+    dto.setNote(entity.getNote());
+    return dto;
+  }
+
+  public static List<WorkloadDTO> toDTOList(List<WorkloadEntity> entities) {
+    return entities.stream().map(WorkloadMapper::toDTO).collect(Collectors.toList());
+  }
+
+  public static WorkloadEntity toEntity(WorkloadDTO dto) {
     WorkloadEntity entity = new WorkloadEntity();
+    entity.setWorkloadId(dto.getWorkloadId());
     entity.setDoctorId(dto.getDoctorId());
-    entity.setDateOfWeek(dto.getDateOfWeek());
-    entity.setTypeOfWork(dto.getTypeOfWork());
     entity.setShift(dto.getShift());
-    entity.setTime(dto.getTime()); // giờ là LocalDateTime
+    entity.setDayOfWeek(dto.getDayOfWeek());
+    entity.setTypeOfWork(dto.getTypeOfWork());
     entity.setRoom(dto.getRoom());
+    entity.setStartTime(dto.getStartTime());
+    entity.setEndTime(dto.getEndTime());
+    entity.setDate(dto.getDate());
     entity.setNote(dto.getNote());
-    entity.setStatus(dto.getStatus());
     return entity;
   }
 
-  public static WorkloadResponseDto toDto(WorkloadEntity entity) {
-    WorkloadResponseDto dto = new WorkloadResponseDto();
-    dto.setWorkloadId(entity.getWorkloadId());
-    dto.setDoctorId(entity.getDoctorId());
-    dto.setDateOfWeek(entity.getDateOfWeek());
-    dto.setTypeOfWork(entity.getTypeOfWork());
-    dto.setShift(entity.getShift());
-    dto.setTime(entity.getTime()); // giờ là LocalDateTime
-    dto.setRoom(entity.getRoom());
-    dto.setNote(entity.getNote());
-    dto.setStatus(entity.getStatus());
-    return dto;
+  public static WorkloadSummaryDTO toSummaryDTO(Object[] rawData) {
+    return new WorkloadSummaryDTO(
+        ((Number) rawData[0]).intValue(),
+        ((Number) rawData[1]).longValue(),
+        ((Number) rawData[2]).longValue());
   }
 
-  public static WorkloadSummaryDto toSummaryDto(Object[] summary) {
-    WorkloadSummaryDto dto = new WorkloadSummaryDto();
-    dto.setDoctorId((Integer) summary[0]);
-    dto.setCount((Long) summary[1]);
-    dto.setSummaryText((String) summary[2]); // Nếu custom query trả về chuỗi
-    return dto;
+  public static List<WorkloadSummaryDTO> toSummaryDTOList(List<Object[]> dataList) {
+    return dataList.stream()
+        .map(WorkloadMapper::toSummaryDTO)
+        .collect(Collectors.toList());
   }
 }

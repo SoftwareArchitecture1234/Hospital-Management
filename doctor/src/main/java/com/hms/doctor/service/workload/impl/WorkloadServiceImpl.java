@@ -6,7 +6,7 @@ import com.hms.doctor.service.workload.WorkloadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -25,27 +25,27 @@ public class WorkloadServiceImpl implements WorkloadService {
     }
 
     @Override
-    public WorkloadEntity getWorkloadById(int id) {
+    public WorkloadEntity getWorkloadById(Long id) {
         return workloadRepository.findById(id).orElse(null);
     }
 
     @Override
-    public List<WorkloadEntity> getWorkloadsByDoctorId(int doctorId) {
+    public List<WorkloadEntity> getWorkloadsByDoctorId(Integer doctorId) {
         return workloadRepository.findByDoctorId(doctorId);
     }
 
     @Override
-    public List<WorkloadEntity> getWorkloadsByTimeBetween(LocalDateTime start, LocalDateTime end) {
-        return workloadRepository.findByTimeBetween(start, end);
+    public List<WorkloadEntity> getWorkloadsByDateBetween(LocalDate start, LocalDate end) {
+        return workloadRepository.findByDateBetween(start, end);
     }
 
     @Override
-    public List<WorkloadEntity> getWorkloadsByDoctorAndDateRange(int doctorId, LocalDateTime start, LocalDateTime end) {
-        return workloadRepository.findByDoctorIdAndTimeBetween(doctorId, start, end);
+    public List<WorkloadEntity> getWorkloadsByDoctorAndDateRange(Integer doctorId, LocalDate start, LocalDate end) {
+        return workloadRepository.findByDoctorIdAndDateBetween(doctorId, start, end);
     }
 
     @Override
-    public List<Object[]> summarizeWorkload(LocalDateTime startDate, LocalDateTime endDate) {
+    public List<Object[]> summarizeWorkload(LocalDate startDate, LocalDate endDate) {
         return workloadRepository.summarizeWorkload(startDate, endDate);
     }
 
@@ -55,7 +55,7 @@ public class WorkloadServiceImpl implements WorkloadService {
     }
 
     @Override
-    public void deleteWorkload(int id) {
+    public void deleteWorkload(Long id) {
         workloadRepository.deleteById(id);
     }
 }

@@ -1,10 +1,12 @@
 package com.hms.doctor.dto.workload;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class WorkloadSummaryDto {
-  private int doctorId;
-  private long count;
-  private String summaryText; // Ví dụ: "Tổng số ca sáng: 5, chiều: 3"
+@AllArgsConstructor
+public class WorkloadSummaryDTO {
+    private Integer doctorId;
+    private Long totalShifts;
+    private Long totalMinutes;
 }

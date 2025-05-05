@@ -2,23 +2,23 @@ package com.hms.doctor.service.workload;
 
 import com.hms.doctor.entity.workload.WorkloadEntity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface WorkloadService {
   List<WorkloadEntity> getAllWorkloads();
 
-  WorkloadEntity getWorkloadById(int id);
+  WorkloadEntity getWorkloadById(Long id);
 
-  List<WorkloadEntity> getWorkloadsByDoctorId(int doctorId);
+  List<WorkloadEntity> getWorkloadsByDoctorId(Integer doctorId);
 
-  List<WorkloadEntity> getWorkloadsByTimeBetween(LocalDateTime start, LocalDateTime end);
+  List<WorkloadEntity> getWorkloadsByDateBetween(LocalDate start, LocalDate end);
 
-  List<WorkloadEntity> getWorkloadsByDoctorAndDateRange(int doctorId, LocalDateTime start, LocalDateTime end);
+  List<WorkloadEntity> getWorkloadsByDoctorAndDateRange(Integer doctorId, LocalDate start, LocalDate end);
 
-  List<Object[]> summarizeWorkload(LocalDateTime startDate, LocalDateTime endDate);
+  List<Object[]> summarizeWorkload(LocalDate startDate, LocalDate endDate);
 
   WorkloadEntity createWorkload(WorkloadEntity workload);
 
-  void deleteWorkload(int id);
+  void deleteWorkload(Long id);
 }
