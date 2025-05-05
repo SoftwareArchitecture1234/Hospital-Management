@@ -1,8 +1,4 @@
-package com.hms.doctor.entity;
-
-import java.util.List;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+package com.hms.doctor.entity.user;
 
 import jakarta.persistence.*;
 import lombok.Getter;

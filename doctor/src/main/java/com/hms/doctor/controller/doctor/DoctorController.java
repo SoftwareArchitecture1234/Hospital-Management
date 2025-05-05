@@ -1,8 +1,9 @@
-package com.hms.doctor.controller;
+package com.hms.doctor.controller.doctor;
 
-import com.hms.doctor.dto.DoctorDto;
-import com.hms.doctor.entity.Doctor;
-import com.hms.doctor.service.DoctorService;
+import com.hms.doctor.dto.doctor.DoctorDto;
+import com.hms.doctor.entity.user.doctor.Doctor;
+import com.hms.doctor.service.doctor.DoctorServiceInterface;
+import com.hms.doctor.service.doctor.impl.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +15,7 @@ import java.util.List;
 public class DoctorController {
 
     @Autowired
-    private DoctorService doctorService;
+    private DoctorServiceInterface doctorService;
 
     @PostMapping
     public ResponseEntity<String> createDoctor(@RequestBody DoctorDto doctorDto) {

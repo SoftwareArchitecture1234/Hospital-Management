@@ -1,4 +1,4 @@
-package com.hms.doctor.dto;
+package com.hms.doctor.dto.doctor;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

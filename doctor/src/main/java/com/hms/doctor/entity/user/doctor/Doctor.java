@@ -1,4 +1,4 @@
-package com.hms.doctor.entity;
+package com.hms.doctor.entity.user.doctor;
 
 import jakarta.persistence.*;
 import lombok.*;
