@@ -109,6 +109,40 @@ public class ScheduleController {
                 .body("Request schedule successfully");
     }
 
+    /**
+     * Gửi yêu cầu xóa lịch hẹn.
+     * @param cancel thông tin lịch hẹn
+     * @return ResponseEntity với mã trạng thái HTTP 200 (OK) và thông báo thành công
+     */
+    @Operation(
+            summary = "Gửi yêu cầu xóa lịch hẹn",
+            description = "Gửi yêu cầu xóa lịch hẹn với thông tin được cung cấp trong request body (Lịch hẹn gần nhất của patient với doctor)."
+    )
+    @Parameter(
+            name = "cancel",
+            description = "Thông tin lịch hẹn: patient và doctor",
+            content = @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(
+                            implementation = RequestScheduleDto.class
+                    )
+            ),
+            required = true
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Yêu cầu xóa lịch hẹn được gửi thành công",
+            content = @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(
+                            implementation = String.class
+                    )
+            )
+    )
+
+
+
+
     @PostMapping("/cancel")
     public ResponseEntity<String> cancelSchedule(@RequestBody RequestScheduleDto request) {
         request.setMessageType("CANCEL");
@@ -116,6 +150,37 @@ public class ScheduleController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body("Cancel schedule successfully");
     }
+
+/**
+     * Gửi yêu cầu tái tạo lịch hẹn.
+     * @param reschedule thông tin lịch hẹn
+     * @return ResponseEntity với mã trạng thái HTTP 200 (OK) và thông báo thành công
+     */
+    @Operation(
+            summary = "Gửi yêu cầu tái tạo lịch hẹn",
+            description = "Gửi yêu cầu tái tạo lịch hẹn với thông tin được cung cấp trong request body (xóa lịch hẹn gần nhất của patient và doctor sau đó tạo ra 1 lịch hẹn mới với thông tin cung cấp)."
+    )
+    @Parameter(
+            name = "reschedule",
+            description = "Thông tin lịch hẹn",
+            content = @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(
+                            implementation = RequestScheduleDto.class
+                    )
+            ),
+            required = true
+    )
+    @ApiResponse(
+            responseCode = "200",
+            description = "Yêu cầu tái tạo lịch hẹn được gửi thành công",
+            content = @io.swagger.v3.oas.annotations.media.Content(
+                    mediaType = "application/json",
+                    schema = @io.swagger.v3.oas.annotations.media.Schema(
+                            implementation = String.class
+                    )
+            )
+    )
 
     @PostMapping("/reschedule")
     public ResponseEntity<String> reSchedule(@RequestBody RequestScheduleDto request) {
