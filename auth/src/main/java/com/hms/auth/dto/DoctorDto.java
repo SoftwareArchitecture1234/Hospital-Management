@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class DoctorDto {
-    private Long userId;
+    private Integer userId;
     private String name;
     private String email;
     private String phone;

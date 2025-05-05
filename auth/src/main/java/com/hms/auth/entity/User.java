@@ -12,12 +12,12 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "users")
+@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long id;
+    private Integer id;
 
     private String name;
 

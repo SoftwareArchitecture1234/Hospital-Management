@@ -1,4 +1,4 @@
-package com.hms.staffmanagement.dto;
+package com.hms.doctor.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,11 +14,11 @@ import lombok.Setter;
 @Setter
 @Builder
 public class DoctorDto {
-    private Long userId;
+    private Integer userId;
     private String name;
     private String email;
     private String phone;
     private String location;
-    private String specialized;
+    private String specialties;
     private Long salary;
 }

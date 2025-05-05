@@ -1,30 +1,26 @@
-package com.hms.staffmanagement.entity;
+package com.hms.doctor.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 @Builder
 @Table(name = "doctors")
 public class Doctor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "doctor_id")
-    private Long doctorId;
+    private Integer doctorId; 
 
-    @OneToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "user_id", nullable = false)
-    private User user; 
+    @Column
+    private String specialties;
 
-    @Column(length = 255)
-    private String specialized;
+    // @OneToOne
+    // @MapsId
+    // @JoinColumn(name = "user_id", nullable = false)
+    // private User user;
 }

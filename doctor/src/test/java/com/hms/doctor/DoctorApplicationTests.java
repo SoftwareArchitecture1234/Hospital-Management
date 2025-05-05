@@ -1,10 +1,10 @@
-package com.hms.staffmanagement;
+package com.hms.doctor;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class StaffmanagementApplicationTests {
+class DoctorApplicationTests {
 
 	@Test
 	void contextLoads() {

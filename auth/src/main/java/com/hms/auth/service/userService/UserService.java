@@ -9,6 +9,6 @@ import com.hms.auth.entity.User;
 public interface UserService {
     UserProfileResponse getProfileWithDetails();
     List<User> getAllUsers();
-    User updateUser(Long id, UserDto userDto);
-    void deleteUser(Long id);
+    User updateUser(Integer id, UserDto userDto);
+    void deleteUser(Integer id);
 }

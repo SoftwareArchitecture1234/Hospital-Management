@@ -1,23 +1,26 @@
-package com.hms.staffmanagement.entity;
-
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+package com.hms.doctor.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "roles")
 public class Role {
 
-    @Id
-    @Column(name = "role_name", nullable = false, length = 50)
+     @Id
+     @GeneratedValue(strategy = GenerationType.IDENTITY)
+     @Column(name = "role_id")
+     private Integer id;
+
     @Enumerated(EnumType.STRING)
-    private RoleType roleName; // Enum for role names
+    @Column(nullable = false)
+    private RoleType roleName;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

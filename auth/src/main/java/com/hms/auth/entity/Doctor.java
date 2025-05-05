@@ -9,17 +9,18 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "doctors")
+@Table(name = "doctor")
 public class Doctor {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long doctorId;
+    @Column(name = "doctor_id")
+    private Integer doctorId; 
 
     @Column
     private String specialties;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    // @OneToOne
+    // @MapsId
+    // @JoinColumn(name = "user_id", nullable = false)
+    // private User user;
 }

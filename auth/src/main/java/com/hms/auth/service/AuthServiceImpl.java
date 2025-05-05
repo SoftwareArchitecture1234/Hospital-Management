@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.hms.auth.dto.DoctorDto;
 import com.hms.auth.dto.LoginDto;
+import com.hms.auth.dto.PatientDto;
 import com.hms.auth.dto.UserDto;
 import com.hms.auth.entity.Doctor;
 import com.hms.auth.entity.Patient;
@@ -23,10 +24,13 @@ import com.hms.auth.exception.InvalidException;
 import com.hms.auth.exception.UsernameAlreadyExisted;
 import com.hms.auth.repository.DoctorRepository;
 import com.hms.auth.repository.PatientRepository;
+import com.hms.auth.repository.RoleRepository;
 import com.hms.auth.repository.UserRepository;
 import com.hms.auth.security.JwtTokenProvider;
 import com.hms.auth.service.authService.AuthService;
+import com.hms.auth.service.patientService.PatientServiceClient;
 import com.hms.auth.service.staffService.StaffServiceClient;
+import com.netflix.discovery.converters.Auto;
 
 import lombok.AllArgsConstructor;
 
@@ -38,13 +42,10 @@ public class AuthServiceImpl implements AuthService {
     private final UserRepository userRepository;
 
     @Autowired
-    private final DoctorRepository doctorRepository;
-
-    @Autowired
-    private final PatientRepository patientRepository;
-
-    @Autowired
     private final StaffServiceClient staffServiceClient;
+
+    @Autowired
+    private final PatientServiceClient patientServiceClient;
 
     private AuthenticationManager authenticationManager;
     private JwtTokenProvider jwtTokenProvider;
@@ -59,13 +60,15 @@ public class AuthServiceImpl implements AuthService {
         if (userRepository.existsByEmail(signupRequest.getEmail())) {
             throw new EmailAreadyExisted("Email already exists");
         }
-
+        
         User user = User.builder()
-                .name(signupRequest.getName())
-                .username(signupRequest.getUsername())
-                .email(signupRequest.getEmail())
-                .password(passwordEncoder.encode(signupRequest.getPassword()))
-                .build();
+            .name(signupRequest.getName())
+            .username(signupRequest.getUsername())
+            .email(signupRequest.getEmail())
+            .password(passwordEncoder.encode(signupRequest.getPassword()))
+            .phone(signupRequest.getPhone())
+            .location(signupRequest.getLocation())
+            .build();
 
         List<Role> roles = signupRequest.getRoles().stream()
                 .map(roleName -> Role.builder()
@@ -79,19 +82,23 @@ public class AuthServiceImpl implements AuthService {
 
         if(roles.stream().anyMatch(role -> role.getRoleName() == RoleType.ROLE_DOCTOR)){
             DoctorDto doctorDto = DoctorDto.builder()
-            .userId(savedUser.getId())
-            .name(savedUser.getName())
-            .email(savedUser.getEmail())
-            .phone(savedUser.getPhone())
-            .location(savedUser.getLocation())
-            .build();
+                .userId(savedUser.getId())
+                .name(signupRequest.getName())
+                .email(signupRequest.getEmail())
+                .phone(signupRequest.getPhone())
+                .location(signupRequest.getLocation())
+                .build();
 
             staffServiceClient.createDoctor(doctorDto);
         } else if (roles.stream().anyMatch(role -> role.getRoleName() == RoleType.ROLE_PATIENT)) {
-            Patient patient = Patient.builder()
-                    .user(savedUser)
+            PatientDto patientDto = PatientDto.builder()
+                    .userId(savedUser.getId())
+                    .age(signupRequest.getAge())
+                    .weight(signupRequest.getWeight())
+                    .height(signupRequest.getHeight())
+                    .gender(signupRequest.getGender())
                     .build();
-            patientRepository.save(patient);
+            patientServiceClient.createPatient(patientDto);
         }
 
         return savedUser;

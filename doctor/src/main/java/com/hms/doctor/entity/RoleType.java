@@ -1,4 +1,4 @@
-package com.hms.staffmanagement.entity;
+package com.hms.doctor.entity;
 
 import lombok.Getter;
 

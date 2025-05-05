@@ -1,4 +1,4 @@
-package com.hms.staffmanagement.entity;
+package com.hms.doctor.entity;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId;
+    private Integer userId;
 
     @Column(nullable = false, length = 255)
     private String name;

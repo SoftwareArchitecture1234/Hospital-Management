@@ -1,8 +1,8 @@
-package com.hms.staffmanagement.controller;
+package com.hms.doctor.controller;
 
-import com.hms.staffmanagement.dto.DoctorDto;
-import com.hms.staffmanagement.entity.Doctor;
-import com.hms.staffmanagement.service.DoctorService;
+import com.hms.doctor.dto.DoctorDto;
+import com.hms.doctor.entity.Doctor;
+import com.hms.doctor.service.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,17 +28,17 @@ public class DoctorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Doctor> getDoctorById(@PathVariable Long id) {
+    public ResponseEntity<Doctor> getDoctorById(@PathVariable Integer id) {
         return ResponseEntity.ok(doctorService.getDoctorById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Doctor> updateDoctor(@PathVariable Long id, @RequestBody DoctorDto doctorDto) {
+    public ResponseEntity<Doctor> updateDoctor(@PathVariable Integer id, @RequestBody DoctorDto doctorDto) {
         return ResponseEntity.ok(doctorService.updateDoctor(id, doctorDto));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteDoctor(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDoctor(@PathVariable Integer id) {
         doctorService.deleteDoctor(id);
         return ResponseEntity.noContent().build();
     }

@@ -1,9 +1,8 @@
-package com.hms.staffmanagement.service;
+package com.hms.doctor.service;
 
-import com.hms.staffmanagement.dto.DoctorDto;
-import com.hms.staffmanagement.entity.Doctor;
-import com.hms.staffmanagement.entity.User;
-import com.hms.staffmanagement.repository.DoctorRepository;
+import com.hms.doctor.dto.DoctorDto;
+import com.hms.doctor.entity.Doctor;
+import com.hms.doctor.repository.DoctorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,11 +15,9 @@ public class DoctorService {
     private DoctorRepository doctorRepository;
 
     public void createDoctor(DoctorDto doctorDto) {
-        User user = new User();
-        user.setUserId(doctorDto.getUserId());
         Doctor doctor = Doctor.builder()
-                .user(user)
-                .specialized(doctorDto.getSpecialized())
+                .doctorId(doctorDto.getUserId())
+                .specialties(doctorDto.getSpecialties())
                 .build();
 
         doctorRepository.save(doctor);
@@ -30,7 +27,7 @@ public class DoctorService {
         return doctorRepository.findAll();
     }
 
-    public Doctor getDoctorById(Long id) {
+    public Doctor getDoctorById(Integer id) {
         return doctorRepository.findByDoctorId(id)
                 .orElseThrow(() -> new RuntimeException("Doctor not found with id: " + id));
     }
@@ -39,13 +36,13 @@ public class DoctorService {
         return doctorRepository.save(doctor);
     }
 
-    public Doctor updateDoctor(Long id, DoctorDto updatedDoctor) {
+    public Doctor updateDoctor(Integer id, DoctorDto updatedDoctor) {
         Doctor existingDoctor = getDoctorById(id);
-        existingDoctor.setSpecialized(updatedDoctor.getSpecialized());
+        existingDoctor.setSpecialties(updatedDoctor.getSpecialties());
         return doctorRepository.save(existingDoctor);
     }
 
-    public void deleteDoctor(Long id) {
+    public void deleteDoctor(Integer id) {
         Doctor doctor = getDoctorById(id);
         doctorRepository.delete(doctor);
     }

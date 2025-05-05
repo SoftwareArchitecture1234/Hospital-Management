@@ -27,7 +27,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
@@ -80,7 +79,7 @@ public class UserController {
         @ApiResponse(responseCode = "404", description = "User not found")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, 
+    public ResponseEntity<User> updateUser(@PathVariable Integer id, 
                         @org.springframework.web.bind.annotation.RequestBody UserDto userDto) {
         return ResponseEntity.ok(userService.updateUser(id, userDto));
     }
@@ -91,7 +90,7 @@ public class UserController {
         @ApiResponse(responseCode = "404", description = "User not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<String> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
         return ResponseEntity.ok("User deleted successfully");
     }

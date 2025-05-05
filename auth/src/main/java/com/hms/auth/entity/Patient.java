@@ -1,5 +1,7 @@
 package com.hms.auth.entity;
 
+import java.sql.Struct;
+
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,12 +11,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Table(name = "patients")
+@Table(name = "patient")
 public class Patient {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long patientId;
+    @Column(name = "patient_id")
+    private Integer patientId;
 
     @Column
     private int age;
@@ -25,15 +27,11 @@ public class Patient {
     @Column
     private float height;
 
-    @Enumerated(EnumType.STRING)
     @Column
-    private Gender gender;
+    private String gender;
 
-    @OneToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-}
-
-enum Gender {
-    MALE, FEMALE
+    // @OneToOne
+    // @MapsId
+    // @JoinColumn(name = "user_id", nullable = false)
+    // private User user;
 }

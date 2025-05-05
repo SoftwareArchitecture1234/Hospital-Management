@@ -1,6 +1,7 @@
 package com.hms.auth.dto;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
@@ -33,4 +34,14 @@ public class UserDto
     private String location; 
 
     private List<String> roles;
+
+    private int age;
+
+    private float weight;
+
+    private float height;
+
+    private String gender;
+
+    private String specialties;
 }

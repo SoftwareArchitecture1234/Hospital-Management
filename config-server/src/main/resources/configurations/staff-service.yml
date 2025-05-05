@@ -1,6 +1,6 @@
 spring:
   application:
-    name: staff-service
+    name: doctor-service
   config:
     import: classpath:/configurations/shared-datasource.yml
 
