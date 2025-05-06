@@ -1,4 +1,4 @@
-package com.hms.patient.service.connection.messagingrabbitmq;
+package com.hms.doctor.service.connection;
 
 /**
  * Interface này được sử dụng để gửi các thông điệp đến RabbitMQ.
@@ -26,7 +26,7 @@ public interface EventPublisherInterface {
      * Gửi một thông báo đến RabbitMQ với các tham số đã chỉ định.
      * @param message     Thông báo cần gửi.
      * @param serviceName Tên dịch vụ mà thông báo thuộc về.
-     * @param messageType Loại thông báo (ví dụ: "new-appointment", "cancel-appointment", "update-appointment")
+     * @param messageType Loại thông báo (nếu có).
      */
     void sendNotification(String message, String serviceName, String messageType);
 }

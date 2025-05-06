@@ -137,10 +137,15 @@ public class ScheduleServiceImpl implements IScheduleService {
 
     @Override
     public boolean reSchedule(RequestScheduleDto requestScheduleDto) {
-        
-        boolean i = this.cancelSchedule(requestScheduleDto);
-        if (i) {
-            return this.requestSchedule(requestScheduleDto); 
+        if (requestScheduleDto.getPatientId() == 0 || requestScheduleDto.getDoctorId() == 0) {
+            throw  new RuntimeException("Lịch hẹn chưa tồn tại");
+        } else {
+            scheduleRepository.changeScheduleStatus(
+                    requestScheduleDto.getPatientId(),
+                    requestScheduleDto.getDoctorId(),
+                    ScheduleStatus.RESCHEDULED.toString()
+            );
+            this.requestSchedule(requestScheduleDto);
         }
         return false;
     }
@@ -150,7 +155,26 @@ public class ScheduleServiceImpl implements IScheduleService {
         if (requestScheduleDto.getPatientId() == 0 || requestScheduleDto.getDoctorId() == 0) {
             throw new RuntimeException("Lịch hẹn chưa tồn tại");
         } else {
-            scheduleRepository.cancelSchedule(requestScheduleDto.getPatientId(), requestScheduleDto.getDoctorId());
+//            scheduleRepository.cancelSchedule(requestScheduleDto.getPatientId(), requestScheduleDto.getDoctorId());
+            scheduleRepository.changeScheduleStatus(
+                    requestScheduleDto.getPatientId(),
+                    requestScheduleDto.getDoctorId(),
+                    ScheduleStatus.CANCELLED.toString()
+            );
+            return true;
+        }
+    }
+
+    @Override
+    public boolean confirmSchedule(RequestScheduleDto requestScheduleDto) {
+        if (requestScheduleDto.getPatientId() == 0 || requestScheduleDto.getDoctorId() == 0) {
+            throw new RuntimeException("Lịch hẹn chưa tồn tại");
+        } else {
+            scheduleRepository.changeScheduleStatus(
+                    requestScheduleDto.getPatientId(),
+                    requestScheduleDto.getDoctorId(),
+                    ScheduleStatus.CONFIRMED.toString()
+            );
             return true;
         }
     }

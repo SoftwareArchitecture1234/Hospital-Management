@@ -18,6 +18,7 @@ public interface EventPublisherInterface {
      *
      * @param message      thông điệp thông báo
      * @param serviceName  tên dịch vụ nhận thông báo
+     * @param messageType  loại thông báo (ví dụ: "new-appointment", "cancel-appointment", "update-appointment")
      */
-    void sendNotification(String message, String serviceName);
+    void sendNotification(String message, String serviceName, String messageType);
 }

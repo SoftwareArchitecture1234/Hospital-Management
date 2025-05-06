@@ -29,10 +29,11 @@ public class EventPublisher implements EventPublisherInterface {
     }
 
     @Override
-    public void sendNotification(String message, String serviceName) {
+    public void sendNotification(String message, String serviceName, String messageType) {
         rabbitTemplate.convertAndSend(
                 "hms.notification", "notification", message, message1 -> {
                     message1.getMessageProperties().setHeader("serviceName", "patient");
+                    message1.getMessageProperties().setHeader("messageType", messageType);
                     return message1;
                 }
         );

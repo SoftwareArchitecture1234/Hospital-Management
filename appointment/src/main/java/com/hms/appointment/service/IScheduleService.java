@@ -19,9 +19,35 @@ public interface IScheduleService {
      */
     List<AvailableTimeSlotDto> getAvailableSlots(QueryScheduleDto queryScheduleDto);
 
+    /**
+     * Đặt lịch hẹn dựa trên thông tin yêu cầu.
+     *
+     * @param requestScheduleDto thông tin yêu cầu đặt lịch
+     * @return true nếu đặt lịch thành công, false nếu không thành công
+     */
     boolean requestSchedule(RequestScheduleDto requestScheduleDto);
 
+    /**
+     * Cập nhật lịch hẹn dựa trên thông tin yêu cầu.
+     *
+     * @param requestScheduleDto thông tin yêu cầu cập nhật lịch
+     * @return true nếu cập nhật lịch thành công, false nếu không thành công
+     */
     boolean reSchedule(RequestScheduleDto requestScheduleDto);
 
+    /**
+     * Hủy lịch hẹn dựa trên thông tin yêu cầu.
+     *
+     * @param requestScheduleDto thông tin yêu cầu hủy lịch
+     * @return true nếu hủy lịch thành công, false nếu không thành công
+     */
     boolean cancelSchedule(RequestScheduleDto requestScheduleDto);
+
+    /**
+     * Xác nhận lịch hẹn dựa trên thông tin yêu cầu.
+     *
+     * @param requestScheduleDto thông tin yêu cầu xác nhận lịch
+     * @return true nếu xác nhận lịch thành công, false nếu không thành công
+     */
+    boolean confirmSchedule(RequestScheduleDto requestScheduleDto);
 }

@@ -13,10 +13,15 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Intege
     @Query(nativeQuery = true,
             value = """
             SELECT * FROM schedule s
-            WHERE s.date = :date
-            AND s.start_time >= :startTime
-            OR s.end_time <= :endTime
-            AND s.doctor_id = :doctorId"""
+                WHERE (s.date = :date
+                AND s.start_time >= :startTime
+                OR s.end_time <= :endTime
+                AND s.doctor_id = :doctorId)
+                AND (s.status = 'PENDING'
+                OR s.status = 'CONFIRMED'
+                OR s.status = 'COMPLETED'
+                )
+            """
     )
     ScheduleEntity findScheduleByDoctorIdAndDate(
             LocalDate date,
@@ -25,24 +30,49 @@ public interface ScheduleRepository extends JpaRepository<ScheduleEntity, Intege
             int doctorId
     );
 
+//    @Modifying
+//    @Transactional
+//    @Query(nativeQuery = true,
+//            value = """
+//            DELETE FROM schedule
+//            WHERE schedule_id = (
+//                SELECT schedule_id FROM (
+//                SELECT schedule_id
+//                FROM schedule
+//                WHERE doctor_id = :doctor_id AND patient_id = :patient_id
+//                ORDER BY start_time DESC
+//                LIMIT 1
+//                ) AS sub
+//            )
+//            """
+//    )
+//    void cancelSchedule(
+//            int patient_id,
+//            int doctor_id
+//    );
+
     @Modifying
     @Transactional
-    @Query(nativeQuery = true,
+    @Query(
+            nativeQuery = true,
             value = """
-            DELETE FROM schedule 
+            UPDATE schedule
+            SET status = :status
             WHERE schedule_id = (
-                SELECT schedule_id FROM (
                 SELECT schedule_id
-                FROM schedule 
-                WHERE doctor_id = :doctor_id AND patient_id = :patient_id
-                ORDER BY start_time DESC
-                LIMIT 1
+                FROM (
+                    SELECT schedule_id
+                    FROM schedule
+                    WHERE doctor_id = :doctor_id AND patient_id = :patient_id
+                    ORDER BY schedule_id DESC
+                    LIMIT 1
                 ) AS sub
             )
             """
     )
-    void cancelSchedule(
+    void changeScheduleStatus(
             int patient_id,
-            int doctor_id
+            int doctor_id,
+            String status
     );
 }

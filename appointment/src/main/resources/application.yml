@@ -11,3 +11,6 @@ hms:
     patient:
       queue:
         name: "hms.patient.schedule.queue"
+    doctor:
+      queue:
+        name: "hms.doctor-queue"
