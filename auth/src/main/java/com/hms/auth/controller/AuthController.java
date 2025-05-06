@@ -30,7 +30,7 @@ public class AuthController {
     @Autowired
     private AuthService authService;
 
-    @Operation(summary = "Login", description = "Authenticates user credentials and returns JWT token")
+    @Operation(summary = "Login", description = "Authenticates user credentials and returns JWT token", security = {})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully authenticated",
                     content = @Content(schema = @Schema(implementation = JwtAuthResponse.class))),
@@ -59,7 +59,7 @@ public class AuthController {
         }
     }
 
-    @Operation(summary = "Register a new user", description = "Creates a new user account")
+    @Operation(summary = "Register a new user", description = "Creates a new user account", security = {})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "User registered successfully"),
             @ApiResponse(responseCode = "400", description = "Username or email already exists")

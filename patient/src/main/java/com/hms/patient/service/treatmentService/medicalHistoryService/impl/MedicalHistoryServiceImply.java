@@ -18,6 +18,7 @@ import com.hms.patient.repository.MedicalHistoryRepository;
 import com.hms.patient.repository.MedicalHistorySymptomRepository;
 import com.hms.patient.repository.MedicineRepository;
 import com.hms.patient.repository.SymptomRepository;
+import com.hms.patient.service.invoiceService.InvoiceServiceInterface;
 import com.hms.patient.service.treatmentService.medicalHistoryService.MedicalHistoryServiceInterface;
 import com.hms.patient.service.treatmentService.medicineService.MedicineServiceInterface;
 import lombok.AllArgsConstructor;
@@ -26,7 +27,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.hms.patient.service.invoiceService.invoiceService.InvoiceServiceInterface;
+// import com.hms.patient.service.invoiceService.invoiceService.InvoiceServiceInterface;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

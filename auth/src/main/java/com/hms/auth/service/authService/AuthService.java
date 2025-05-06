@@ -7,5 +7,4 @@ import com.hms.auth.entity.User;
 public interface AuthService {
     String login(LoginDto loginDto);
     User registerUser(UserDto signupRequest);
-    User getProfile();
 }

@@ -8,6 +8,57 @@
       "mainClass": "com.hms.config_server.ConfigServerApplication",
       "projectName": "config-server",
       "args": "",
+      "envFile": "${workspaceFolder}/.env",
+      "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=61411 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=config-server"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-DiscoveryApplication<discovery>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.hms.discovery.DiscoveryApplication",
+      "projectName": "discovery",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-GatewayApplication<gateway>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.hms.gateway.GatewayApplication",
+      "projectName": "gateway",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-DoctorApplication<doctor>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.hms.doctor.DoctorApplication",
+      "projectName": "doctor",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-PatientApplication<patient>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.hms.patient.PatientApplication",
+      "projectName": "patient",
+      "args": "",
+      "envFile": "${workspaceFolder}/.env"
+    },
+    {
+      "type": "java",
+      "name": "Spring Boot-AuthApplication<auth>",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "mainClass": "com.hms.auth.AuthApplication",
+      "projectName": "auth",
+      "args": "",
       "envFile": "${workspaceFolder}/.env"
     }
   ]
