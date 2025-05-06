@@ -1,4 +1,4 @@
-package com.hms.patient.service.invoiceService.invoiceService;
+package com.hms.patient.service.invoiceService;
 
 import com.hms.patient.dtos.invoice.InvoiceDto;
 import com.hms.patient.dtos.invoice.InvoiceQueryDto;
