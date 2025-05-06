@@ -6,6 +6,8 @@ import com.hms.patient.entity.invoice.InvoiceEntity;
 import com.hms.patient.exception.ExceptionResourceNotFound;
 import com.hms.patient.mapper.invoice.InvoiceMapper;
 import com.hms.patient.repository.InvoiceRepository;
+import com.hms.patient.service.invoiceService.InvoiceServiceInterface;
+
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +20,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class InvoiceServiceImply implements com.hms.patient.service.invoiceService.invoiceService.InvoiceServiceInterface {
+public class InvoiceServiceImply implements InvoiceServiceInterface {
 
     private final InvoiceRepository invoiceRepository;
     private static final AtomicInteger counter = new AtomicInteger(0);

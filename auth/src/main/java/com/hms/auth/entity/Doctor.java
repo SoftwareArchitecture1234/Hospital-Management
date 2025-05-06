@@ -1,4 +1,4 @@
-package com.hms.doctor.entity.user.doctor;
+package com.hms.auth.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,7 +14,7 @@ public class Doctor {
 
     @Id
     @Column(name = "doctor_id")
-    private Integer doctorId;
+    private Integer doctorId; 
 
     @Column
     private String specialties;

@@ -1,6 +1,9 @@
 package com.hms.gateway.config;
 
 import com.hms.gateway.security.JwtTokenProvider;
+
+import java.util.List;
+
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.HttpHeaders;
@@ -14,6 +17,10 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
 
     private final JwtTokenProvider jwtTokenProvider;
 
+    private static final List<String> EXEMPT_PATHS = List.of(
+        "/api/v1/doctors",
+        "/api/patient/create");
+
     public AuthFilter(JwtTokenProvider jwtTokenProvider) {
         super(Config.class);
         this.jwtTokenProvider = jwtTokenProvider;
@@ -26,13 +33,20 @@ public class AuthFilter extends AbstractGatewayFilterFactory<AuthFilter.Config> 
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
+            String path = exchange.getRequest().getURI().getPath();
+            String method = exchange.getRequest().getMethod().name();
+
+            if (EXEMPT_PATHS.contains(path) && "POST".equalsIgnoreCase(method)) {
+                return chain.filter(exchange);
+            }
+            
             String authHeader = exchange.getRequest().getHeaders().getFirst(HttpHeaders.AUTHORIZATION);
 
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
                 throw new RuntimeException("Missing or invalid Authorization header");
             }
 
-            String token = authHeader.substring(7); // Loại bỏ tiền tố "Bearer "
+            String token = authHeader.substring(7);
 
             if (!jwtTokenProvider.validateToken(token)) {
                 throw new RuntimeException("Invalid JWT token");
